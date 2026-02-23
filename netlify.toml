@@ -7,7 +7,7 @@
   VITE_SUPABASE_URL="https://your-project-id.supabase.co"
   VITE_SUPABASE_ANON_KEY="your-anon-key-here"
 
-[plugins]
+[[plugins]]
   package = "netlify-plugin-secrets-scanning"
     # Exclude environment variable references from secrets scanning
     exclude_patterns = ["VITE_*", "import.meta.env.VITE_*"]

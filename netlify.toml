@@ -9,9 +9,6 @@
   package = "netlify-plugin-one"
 
   [[plugins]]
-  package = "netlify-plugin-two"
-
-  [[plugins]]
   package = "netlify-plugin-secrets-scanning"
     # Exclude environment variable references from secrets scanning
     exclude_patterns = ["VITE_*", "import.meta.env.VITE_*"]

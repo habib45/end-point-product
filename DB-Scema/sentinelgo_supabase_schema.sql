@@ -1,5 +1,5 @@
 -- ============================================================
--- 'SentinelGo' Endpoint Protector — Supabase PostgreSQL Schema
+-- Endpoint Protector — Supabase PostgreSQL Schema
 -- Version: 2.0  |  Compatible: Supabase + PostgreSQL 15+
 -- BRD Reference: v1.0  |  Generated: 2025
 -- ============================================================
@@ -1608,7 +1608,7 @@ ON CONFLICT (template_name) DO NOTHING;
 -- ============================================================
 
 SELECT
-  'SentinelGo' Supabase Schema v2.0 — deployed successfully' AS status,
+  'Endpoint Protector Supabase Schema v2.0 — deployed successfully' AS status,
   NOW() AS deployed_at,
   (SELECT COUNT(*) FROM information_schema.tables
    WHERE table_schema = 'public' AND table_type = 'BASE TABLE') AS table_count,

@@ -14,7 +14,6 @@
     "jsx": "react-jsx",
     "strict": false,
     "noImplicitAny": false,
-    "suppressImplicitReturns": false,
     "noImplicitThis": false,
     "noUnusedLocals": false,
     "noUnusedParameters": false,

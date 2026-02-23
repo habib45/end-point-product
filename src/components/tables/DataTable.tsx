@@ -15,6 +15,9 @@ interface DataTableProps {
   actions?: ReactNode
   loading?: boolean
   emptyMessage?: string
+  title?: string
+  sortable?: boolean
+  paginate?: boolean
 }
 
 export default function DataTable({

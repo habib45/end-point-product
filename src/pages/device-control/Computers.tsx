@@ -1,4 +1,3 @@
-import { Link } from 'react-router-dom'
 import ContentHeader from '@/components/ui/ContentHeader'
 import DataTable from '@/components/tables/DataTable'
 
@@ -32,7 +31,7 @@ export default function Computers() {
 
   return (
     <>
-      <ContentHeader title="Computer Management" breadcrumbs={[{label:'Device Control',link:'/device-control'},{label:'Computers'}]} />
+      <ContentHeader title="Computer Management" breadcrumbs={[{label:'Device Control',path:'/device-control'},{label:'Computers'}]} />
       <div className="row g-3 mb-4">
         {[
           {label:'Total', value:'2,847', icon:'bi-pc-display', color:'primary'},
@@ -57,7 +56,7 @@ export default function Computers() {
       </div>
       <div className="card border-0 shadow-sm" style={{borderRadius:16}}>
         <div className="card-body p-4">
-          <DataTable columns={columns} data={MOCK_COMPUTERS} title="Endpoints" searchable sortable paginate />
+          <DataTable columns={columns} data={MOCK_COMPUTERS} searchable />
         </div>
       </div>
     </>

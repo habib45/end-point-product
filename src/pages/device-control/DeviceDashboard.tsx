@@ -82,7 +82,7 @@ export default function DeviceDashboard() {
           </ul>
         </div>
         <div className="card-body p-4">
-          <DataTable columns={columns} data={MOCK_DEVICES} title="Connected Devices" searchable sortable paginate />
+          <DataTable columns={columns} data={MOCK_DEVICES} searchable />
         </div>
       </div>
     </>

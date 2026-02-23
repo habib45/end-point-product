@@ -18,7 +18,7 @@ export default function Violations() {
 
   return (
     <>
-      <ContentHeader title="Policy Violations" breadcrumbs={[{label:'Reports',link:'/reports'},{label:'Violations'}]} />
+      <ContentHeader title="Policy Violations" breadcrumbs={[{label:'Reports',path:'/reports'},{label:'Violations'}]} />
 
       <div className="row g-3 mb-4">
         {[
@@ -70,7 +70,7 @@ export default function Violations() {
                 !row.resolved ? <button className="btn btn-sm btn-outline-success">Resolve</button> : null
               )},
             ]}
-            data={filtered} searchable sortable paginate title=""
+            data={filtered} searchable
           />
         </div>
       </div>

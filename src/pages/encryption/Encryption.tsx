@@ -45,7 +45,7 @@ export default function Encryption() {
               <h6 className="mb-0 fw-bold">Encrypted Devices</h6>
               <button className="btn btn-primary btn-sm"><i className="bi bi-key me-1"/>Generate Temp Password</button>
             </div>
-            <div className="card-body p-4 pt-2">
+            <div className="card-body p-4">
               <DataTable
                 columns={[
                   {key:'device', label:'Device', render:(v:string)=><span className="fw-semibold">{v}</span>},
@@ -55,7 +55,8 @@ export default function Encryption() {
                   {key:'last_access', label:'Last Access'},
                   {key:'id', label:'', render:()=>(<button className="btn btn-sm btn-outline-secondary"><i className="bi bi-three-dots"/></button>)},
                 ]}
-                data={MOCK_ENCRYPTED} searchable sortable paginate title=""
+                data={MOCK_ENCRYPTED}
+                searchable
               />
             </div>
           </div>

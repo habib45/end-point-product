@@ -28,17 +28,14 @@ export async function getDeviceControlStats(): Promise<ApiResponse<{
   const today = new Date().toISOString().split('T')[0]
 
   const [totalRes, blockedRes, allowedRes, whitelistRes] = await Promise.all([
-    supabase.from('devices').select('*', { count: 'exact', head: true }),
-    supabase.from('device_sessions')
-      .select('*', { count: 'exact', head: true })
+    (supabase.from('devices') as any).select('*', { count: 'exact', head: true }),
+    (supabase.from('device_sessions') as any).select('*', { count: 'exact', head: true })
       .eq('action_taken', 'BLOCK')
       .gte('connection_time', today),
-    supabase.from('device_sessions')
-      .select('*', { count: 'exact', head: true })
+    (supabase.from('device_sessions') as any).select('*', { count: 'exact', head: true })
       .eq('action_taken', 'ALLOW')
       .gte('connection_time', today),
-    supabase.from('devices')
-      .select('*', { count: 'exact', head: true })
+    (supabase.from('devices') as any).select('*', { count: 'exact', head: true })
       .eq('is_whitelisted', true),
   ])
 
@@ -55,8 +52,7 @@ export async function getDeviceControlStats(): Promise<ApiResponse<{
 
 // Real-time device connection events — uses Supabase Realtime
 export function subscribeToDeviceEvents(callback: (payload: unknown) => void) {
-  return supabase
-    .channel('device_events_realtime')
+  return (supabase.channel('device_events_realtime') as any)
     .on('postgres_changes', {
       event: 'INSERT',
       schema: 'public',
@@ -73,8 +69,7 @@ export async function getRecentDeviceSessions(
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 
-  let query = supabase
-    .from('device_sessions')
+  let query = (supabase.from('device_sessions') as any)
     .select(`
       *,
       devices(device_name, serial_number, vendor_id, product_id,
@@ -105,8 +100,7 @@ export async function getDevices(params?: PaginationParams & {
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 
-  let query = supabase
-    .from('devices')
+  let query = (supabase.from('devices') as any)
     .select('*, device_classes(class_name, description)', { count: 'exact' })
     .range(from, to)
     .order('created_at', { ascending: false })
@@ -124,8 +118,7 @@ export async function getDevices(params?: PaginationParams & {
 }
 
 export async function getDeviceById(deviceId: string): Promise<ApiResponse<Device>> {
-  const { data, error } = await supabase
-    .from('devices')
+  const { data, error } = await (supabase.from('devices') as any)
     .select('*, device_classes(class_name, description)')
     .eq('device_id', deviceId)
     .single()
@@ -134,8 +127,7 @@ export async function getDeviceById(deviceId: string): Promise<ApiResponse<Devic
 }
 
 export async function createDevice(device: Partial<Device>): Promise<ApiResponse<Device>> {
-  const { data, error } = await supabase
-    .from('devices')
+  const { data, error } = await (supabase.from('devices') as any)
     .insert(device)
     .select()
     .single()
@@ -144,8 +136,7 @@ export async function createDevice(device: Partial<Device>): Promise<ApiResponse
 }
 
 export async function updateDevice(deviceId: string, updates: Partial<Device>): Promise<ApiResponse<Device>> {
-  const { data, error } = await supabase
-    .from('devices')
+  const { data, error } = await (supabase.from('devices') as any)
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('device_id', deviceId)
     .select()
@@ -155,8 +146,7 @@ export async function updateDevice(deviceId: string, updates: Partial<Device>): 
 }
 
 export async function deleteDevice(deviceId: string): Promise<ApiResponse<null>> {
-  const { error } = await supabase
-    .from('devices')
+  const { error } = await (supabase.from('devices') as any)
     .delete()
     .eq('device_id', deviceId)
   if (error) return { data: null, error: error.message }
@@ -175,8 +165,7 @@ export async function setDeviceBlacklist(deviceId: string, blacklisted: boolean)
 // ---- FR-DC-008: Device Classes ----
 
 export async function getDeviceClasses(): Promise<ApiResponse<DeviceClass[]>> {
-  const { data, error } = await supabase
-    .from('device_classes')
+  const { data, error } = await (supabase.from('device_classes') as any)
     .select('*')
     .order('class_name')
   if (error) return { data: null, error: error.message }
@@ -184,8 +173,7 @@ export async function getDeviceClasses(): Promise<ApiResponse<DeviceClass[]>> {
 }
 
 export async function createDeviceClass(dc: Partial<DeviceClass>): Promise<ApiResponse<DeviceClass>> {
-  const { data, error } = await supabase
-    .from('device_classes')
+  const { data, error } = await (supabase.from('device_classes') as any)
     .insert({ ...dc, is_custom: true })
     .select()
     .single()
@@ -204,8 +192,7 @@ export async function getComputers(params?: PaginationParams & {
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 
-  let query = supabase
-    .from('computers')
+  let query = (supabase.from('computers') as any)
     .select('*, departments(name)', { count: 'exact' })
     .range(from, to)
     .order('computer_name')
@@ -220,8 +207,7 @@ export async function getComputers(params?: PaginationParams & {
 }
 
 export async function getComputerById(computerId: string): Promise<ApiResponse<Computer>> {
-  const { data, error } = await supabase
-    .from('computers')
+  const { data, error } = await (supabase.from('computers') as any)
     .select('*, departments(name)')
     .eq('computer_id', computerId)
     .single()
@@ -230,8 +216,7 @@ export async function getComputerById(computerId: string): Promise<ApiResponse<C
 }
 
 export async function updateComputer(computerId: string, updates: Partial<Computer>): Promise<ApiResponse<Computer>> {
-  const { data, error } = await supabase
-    .from('computers')
+  const { data, error } = await (supabase.from('computers') as any)
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('computer_id', computerId)
     .select()
@@ -241,8 +226,7 @@ export async function updateComputer(computerId: string, updates: Partial<Comput
 }
 
 export async function getComputerGroups(): Promise<ApiResponse<ComputerGroup[]>> {
-  const { data, error } = await supabase
-    .from('computer_groups')
+  const { data, error } = await (supabase.from('computer_groups') as any)
     .select('*')
     .order('group_name')
   if (error) return { data: null, error: error.message }
@@ -250,8 +234,7 @@ export async function getComputerGroups(): Promise<ApiResponse<ComputerGroup[]>>
 }
 
 export async function createComputerGroup(group: Partial<ComputerGroup>): Promise<ApiResponse<ComputerGroup>> {
-  const { data, error } = await supabase
-    .from('computer_groups')
+  const { data, error } = await (supabase.from('computer_groups') as any)
     .insert(group)
     .select()
     .single()
@@ -260,8 +243,7 @@ export async function createComputerGroup(group: Partial<ComputerGroup>): Promis
 }
 
 export async function assignComputerToGroup(computerId: string, groupId: string): Promise<ApiResponse<null>> {
-  const { error } = await supabase
-    .from('computer_group_memberships')
+  const { error } = await (supabase.from('computer_group_memberships') as any)
     .upsert({ computer_id: computerId, group_id: groupId })
   if (error) return { data: null, error: error.message }
   return { data: null, error: null }
@@ -279,8 +261,7 @@ export async function getUsers(params?: PaginationParams & {
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 
-  let query = supabase
-    .from('users')
+  let query = (supabase.from('users') as any)
     .select('*, departments(name)', { count: 'exact' })
     .range(from, to)
     .order('username')
@@ -298,8 +279,7 @@ export async function getUsers(params?: PaginationParams & {
 }
 
 export async function getUserById(userId: string): Promise<ApiResponse<User>> {
-  const { data, error } = await supabase
-    .from('users')
+  const { data, error } = await (supabase.from('users') as any)
     .select('*, departments(name)')
     .eq('user_id', userId)
     .single()
@@ -308,8 +288,7 @@ export async function getUserById(userId: string): Promise<ApiResponse<User>> {
 }
 
 export async function createUser(user: Partial<User>): Promise<ApiResponse<User>> {
-  const { data, error } = await supabase
-    .from('users')
+  const { data, error } = await (supabase.from('users') as any)
     .insert(user)
     .select()
     .single()
@@ -318,8 +297,7 @@ export async function createUser(user: Partial<User>): Promise<ApiResponse<User>
 }
 
 export async function updateUser(userId: string, updates: Partial<User>): Promise<ApiResponse<User>> {
-  const { data, error } = await supabase
-    .from('users')
+  const { data, error } = await (supabase.from('users') as any)
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('user_id', userId)
     .select()
@@ -329,8 +307,7 @@ export async function updateUser(userId: string, updates: Partial<User>): Promis
 }
 
 export async function deleteUser(userId: string): Promise<ApiResponse<null>> {
-  const { error } = await supabase
-    .from('users')
+  const { error } = await (supabase.from('users') as any)
     .update({ is_active: false, updated_at: new Date().toISOString() })
     .eq('user_id', userId)
   if (error) return { data: null, error: error.message }
@@ -340,8 +317,7 @@ export async function deleteUser(userId: string): Promise<ApiResponse<null>> {
 // ---- FR-DC-005: Group Management ----
 
 export async function getUserGroups(): Promise<ApiResponse<UserGroup[]>> {
-  const { data, error } = await supabase
-    .from('user_groups')
+  const { data, error } = await (supabase.from('user_groups') as any)
     .select('*')
     .order('group_name')
   if (error) return { data: null, error: error.message }
@@ -349,8 +325,7 @@ export async function getUserGroups(): Promise<ApiResponse<UserGroup[]>> {
 }
 
 export async function createUserGroup(group: Partial<UserGroup>): Promise<ApiResponse<UserGroup>> {
-  const { data, error } = await supabase
-    .from('user_groups')
+  const { data, error } = await (supabase.from('user_groups') as any)
     .insert(group)
     .select()
     .single()
@@ -359,16 +334,14 @@ export async function createUserGroup(group: Partial<UserGroup>): Promise<ApiRes
 }
 
 export async function addUserToGroup(userId: string, groupId: string): Promise<ApiResponse<null>> {
-  const { error } = await supabase
-    .from('user_group_memberships')
+  const { error } = await (supabase.from('user_group_memberships') as any)
     .upsert({ user_id: userId, group_id: groupId })
   if (error) return { data: null, error: error.message }
   return { data: null, error: null }
 }
 
 export async function removeUserFromGroup(userId: string, groupId: string): Promise<ApiResponse<null>> {
-  const { error } = await supabase
-    .from('user_group_memberships')
+  const { error } = await (supabase.from('user_group_memberships') as any)
     .delete()
     .eq('user_id', userId)
     .eq('group_id', groupId)
@@ -386,8 +359,7 @@ export async function getPolicies(params?: PaginationParams & {
   const from = (page - 1) * pageSize
   const to = from + pageSize - 1
 
-  let query = supabase
-    .from('policies')
+  let query = (supabase.from('policies') as any)
     .select('*, users!created_by(username)', { count: 'exact' })
     .range(from, to)
     .order('priority')
@@ -401,8 +373,7 @@ export async function getPolicies(params?: PaginationParams & {
 }
 
 export async function createPolicy(policy: Partial<Policy>): Promise<ApiResponse<Policy>> {
-  const { data, error } = await supabase
-    .from('policies')
+  const { data, error } = await (supabase.from('policies') as any)
     .insert(policy)
     .select()
     .single()
@@ -411,8 +382,7 @@ export async function createPolicy(policy: Partial<Policy>): Promise<ApiResponse
 }
 
 export async function updatePolicy(policyId: string, updates: Partial<Policy>): Promise<ApiResponse<Policy>> {
-  const { data, error } = await supabase
-    .from('policies')
+  const { data, error } = await (supabase.from('policies') as any)
     .update({ ...updates, updated_at: new Date().toISOString() })
     .eq('policy_id', policyId)
     .select()

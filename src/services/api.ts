@@ -2,7 +2,7 @@
  * SentinelGo API Service
  * All Supabase REST API calls organized by BRD module
  */
-import { supabase } from '@/lib/supabase'
+import { supabase, type Tables } from '@/lib/supabase'
 
 // ─── DASHBOARD ─────────────────────────────────────────────────────────────
 
@@ -10,10 +10,10 @@ export const dashboardApi = {
   /** Summary stats for the main dashboard */
   async getSummaryStats() {
     const [computers, alerts, violations, devices] = await Promise.all([
-      supabase.from('computers').select('status', { count: 'exact' }),
-      supabase.from('alerts').select('severity, status', { count: 'exact' }).eq('status', 'OPEN'),
-      supabase.from('policy_violations').select('severity', { count: 'exact' }).eq('resolved', false),
-      supabase.from('device_sessions').select('action_taken', { count: 'exact' })
+      (supabase.from('computers') as any).select('status', { count: 'exact' }),
+      (supabase.from('alerts') as any).select('severity, status', { count: 'exact' }).eq('status', 'OPEN'),
+      (supabase.from('policy_violations') as any).select('severity', { count: 'exact' }).eq('resolved', false),
+      (supabase.from('device_sessions') as any).select('action_taken', { count: 'exact' })
         .gte('connection_time', new Date(Date.now() - 86400000).toISOString()),
     ])
     return { computers, alerts, violations, devices }

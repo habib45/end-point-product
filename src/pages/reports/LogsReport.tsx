@@ -19,7 +19,7 @@ export default function LogsReport() {
 
   return (
     <>
-      <ContentHeader title="System Logs" breadcrumbs={[{label:'Reports',link:'/reports'},{label:'Logs'}]} />
+      <ContentHeader title="System Logs" breadcrumbs={[{label:'Reports',path:'/reports'},{label:'Logs'}]} />
       <div className="card border-0 shadow-sm" style={{borderRadius:16}}>
         <div className="card-header bg-transparent border-0 pt-4 px-4">
           <div className="d-flex align-items-center justify-content-between mb-3">
@@ -43,7 +43,7 @@ export default function LogsReport() {
               {key:'computer', label:'Computer'},
               {key:'timestamp', label:'Timestamp', sortable:true},
             ]}
-            data={filtered} searchable sortable paginate title=""
+            data={filtered} searchable
           />
         </div>
       </div>

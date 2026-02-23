@@ -11,6 +11,7 @@ if (!supabaseUrl || !supabaseAnonKey) {
   )
 }
 
+// Create a typed Supabase client
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
   auth: {
     autoRefreshToken: true,
@@ -23,5 +24,8 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey, {
     },
   },
 })
+
+// Export a helper type for easier access to table types
+export type Tables = Database['public']['Tables']
 
 export default supabase

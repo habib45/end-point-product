@@ -96,26 +96,26 @@ export default function EDiscovery() {
             />
           )}
           {tab === 'results' && (
-            <DataTable
-              columns={[
-                {key:'file', label:'File Name', sortable:true, render:(v:string)=><span className="fw-semibold">{v}</span>},
-                {key:'path', label:'Path', render:(v:string)=><code className="small text-muted">{v}</code>},
-                {key:'size', label:'Size'},
-                {key:'sensitivity', label:'Sensitivity', render:(v:string)=><span className={`badge bg-${SENSITIVITY_COLOR[v]||'secondary'}`}>{v}</span>},
-                {key:'patterns', label:'Matched Patterns', render:(v:string)=><span className="small text-muted">{v}</span>},
-                {key:'computer', label:'Computer'},
-                {key:'user', label:'User'},
-                {key:'found', label:'Found', sortable:true},
-                {key:'id', label:'Actions', render:()=>(
-                  <div className="d-flex gap-1">
-                    <button className="btn btn-sm btn-outline-danger" title="Delete"><i className="bi bi-trash"/></button>
-                    <button className="btn btn-sm btn-outline-warning" title="Quarantine"><i className="bi bi-archive"/></button>
-                    <button className="btn btn-sm btn-outline-secondary" title="Mark False Positive"><i className="bi bi-flag"/></button>
-                  </div>
-                )},
-              ]}
-              data={MOCK_RESULTS} searchable sortable paginate title="Discovery Results"
-            />
+            <div className="card-body p-4 pt-2">
+              <DataTable
+                columns={[
+                  {key:'scan_name', label:'Scan Name'},
+                  {key:'patterns', label:'Matched Patterns', render:(v:string)=><span className="small text-muted">{v}</span>},
+                  {key:'computer', label:'Computer'},
+                  {key:'user', label:'User'},
+                  {key:'found', label:'Found', sortable:true},
+                  {key:'id', label:'Actions', render:()=>(
+                    <div className="d-flex gap-1">
+                      <button className="btn btn-sm btn-outline-danger" title="Delete"><i className="bi bi-trash"/></button>
+                      <button className="btn btn-sm btn-outline-warning" title="Quarantine"><i className="bi bi-archive"/></button>
+                      <button className="btn btn-sm btn-outline-secondary" title="Mark False Positive"><i className="bi bi-flag"/></button>
+                    </div>
+                  )},
+                ]}
+                data={MOCK_RESULTS}
+                searchable
+              />
+            </div>
           )}
         </div>
       </div>

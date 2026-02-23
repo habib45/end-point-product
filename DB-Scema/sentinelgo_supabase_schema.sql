@@ -1,5 +1,5 @@
 -- ============================================================
--- SentinelGo Endpoint Protector — Supabase PostgreSQL Schema
+-- ${import.meta.env.VITE_APP_NAME || 'SentinelGo'} Endpoint Protector — Supabase PostgreSQL Schema
 -- Version: 2.0  |  Compatible: Supabase + PostgreSQL 15+
 -- BRD Reference: v1.0  |  Generated: 2025
 -- ============================================================
@@ -1542,7 +1542,7 @@ ON CONFLICT (category_name) DO NOTHING;
 -- ── System Settings (defaults) ───────────────────────────────
 /*
 INSERT INTO system_settings (setting_key, setting_value, setting_type, description, is_readonly) VALUES
-  ('system.name',                  'SentinelGo Endpoint Protector', 'STRING',  'Product display name',                          FALSE),
+  ('system.name',                  '${import.meta.env.VITE_APP_NAME || ''} Endpoint Protector', 'STRING',  'Product display name',                          FALSE),
   ('system.version',               '2.0.0',                          'STRING',  'Current system version',                        TRUE),
   ('system.timezone',              'UTC',                            'STRING',  'System default timezone',                       FALSE),
   ('security.session_timeout_sec', '3600',                           'INTEGER', 'Session timeout in seconds (0 = no timeout)',    FALSE),
@@ -1608,7 +1608,7 @@ ON CONFLICT (template_name) DO NOTHING;
 -- ============================================================
 
 SELECT
-  'SentinelGo Supabase Schema v2.0 — deployed successfully' AS status,
+  '${import.meta.env.VITE_APP_NAME || 'SentinelGo'} Supabase Schema v2.0 — deployed successfully' AS status,
   NOW() AS deployed_at,
   (SELECT COUNT(*) FROM information_schema.tables
    WHERE table_schema = 'public' AND table_type = 'BASE TABLE') AS table_count,

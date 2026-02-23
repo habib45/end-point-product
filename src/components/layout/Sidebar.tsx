@@ -139,7 +139,7 @@ export default function Sidebar() {
           <div className="d-flex align-items-center justify-content-center bg-primary rounded-2 me-2" style={{ width: 36, height: 36 }}>
             <i className="bi bi-shield-fill-check text-white fs-6"></i>
           </div>
-          <span className="brand-text fw-bold text-white fs-6">SentinelGo</span>
+          <span className="brand-text fw-bold text-white fs-6">{import.meta.env.VITE_APP_NAME}</span>
           <span className="badge bg-danger ms-1" style={{fontSize:'0.6rem'}}>PRO</span>
         </a>
       </div>

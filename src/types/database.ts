@@ -1,5 +1,5 @@
 // =====================================================
-// SentinelGo Database Types
+// ${import.meta.env.VITE_APP_NAME} Database Types
 // Generated from sentinelgo_schema.sql
 // =====================================================
 

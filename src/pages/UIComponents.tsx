@@ -4,7 +4,7 @@ import toast from 'react-hot-toast'
 export default function UIComponents() {
   return (
     <>
-      <ContentHeader title="UI Components" breadcrumbs={[{ label: 'UI Kit' }, { label: 'Components' }]} />
+      <ContentHeader title="UI Components" breadcrumbs={[{ label: import.meta.env.VITE_APP_NAME || 'UI Kit' }, { label: 'Components' }]} />
 
       <div className="row g-3">
         {/* Buttons */}

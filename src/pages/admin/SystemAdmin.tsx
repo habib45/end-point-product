@@ -5,7 +5,7 @@ export default function SystemAdmin() {
   const [tab, setTab] = useState<'settings'|'license'|'departments'|'security'>('settings')
 
   const SETTINGS = [
-    { key:'system.name', value:'SentinelGo Endpoint Protector', type:'STRING', desc:'System display name' },
+    { key:'system.name', value:import.meta.env.VITE_APP_NAME, type:'STRING', desc:'System display name' },
     { key:'security.session_timeout', value:'3600', type:'INTEGER', desc:'Session timeout (seconds)' },
     { key:'security.password_min_length', value:'8', type:'INTEGER', desc:'Minimum password length' },
     { key:'security.mfa_required', value:'true', type:'BOOLEAN', desc:'Require MFA for admins' },
@@ -86,7 +86,7 @@ export default function SystemAdmin() {
                     </div>
                     <div className="row g-2">
                       {[
-                        {label:'Product', value:'SentinelGo Enterprise'},
+                        {label:'Product', value:import.meta.env.VITE_APP_NAME},
                         {label:'Version', value:'4.2.1'},
                         {label:'Max Endpoints', value:'5,000'},
                         {label:'Current Endpoints', value:'2,847'},

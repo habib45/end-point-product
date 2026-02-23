@@ -1,5 +1,5 @@
 /**
- * SentinelGo API Service
+ * ${import.meta.env.VITE_APP_NAME} API Service
  * All Supabase REST API calls organized by BRD module
  */
 import { supabase, type Tables } from '@/lib/supabase'

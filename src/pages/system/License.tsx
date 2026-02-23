@@ -2,7 +2,7 @@ import ContentHeader from '@/components/ui/ContentHeader'
 
 const LICENSE = {
   key: 'SNTGO-ENTE-RPRI-SE-2025-ABCD-1234-EFGH',
-  product: 'SentinelGo Endpoint Protector',
+  product: import.meta.env.VITE_APP_NAME,
   version: '4.3.2',
   edition: 'Enterprise',
   max_endpoints: 1000,

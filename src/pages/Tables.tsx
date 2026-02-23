@@ -5,7 +5,7 @@ import { getStatusColor, getInitials } from '@/utils/helpers'
 export default function Tables() {
   return (
     <>
-      <ContentHeader title="Tables" breadcrumbs={[{ label: 'UI Kit' }, { label: 'Tables' }]} />
+      <ContentHeader title="Tables" breadcrumbs={[{ label: import.meta.env.VITE_APP_NAME || 'UI Kit' }, { label: 'Tables' }]} />
 
       <div className="row g-3">
         {/* Basic Table */}

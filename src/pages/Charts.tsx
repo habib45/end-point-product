@@ -29,7 +29,7 @@ const chartOptions = {
 export default function Charts() {
   return (
     <>
-      <ContentHeader title="Charts" breadcrumbs={[{ label: 'UI Kit' }, { label: 'Charts' }]} />
+      <ContentHeader title="Charts" breadcrumbs={[{ label: import.meta.env.VITE_APP_NAME || 'UI Kit' }, { label: 'Charts' }]} />
 
       <div className="row g-3 mb-3">
         <div className="col-12">

@@ -6,7 +6,12 @@
   VITE_APP_VERSION = "1.0.0"
 
 [plugins]
-  # Netlify plugin for secrets scanning
-  [inputs.plugins.secrets-scanning]
+  package = "netlify-plugin-one"
+
+  [[plugins]]
+  package = "netlify-plugin-two"
+
+  [[plugins]]
+  package = "netlify-plugin-secrets-scanning"
     # Exclude environment variable references from secrets scanning
     exclude_patterns = ["VITE_*", "import.meta.env.VITE_*"]

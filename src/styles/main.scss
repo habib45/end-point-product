@@ -1,0 +1,325 @@
+// ============================================================
+// AdminPanel Pro - Custom SCSS
+// ============================================================
+
+:root {
+  --sidebar-width: 250px;
+  --header-height: 56px;
+  --font-base: 'Inter', sans-serif;
+  --transition-speed: 0.25s;
+}
+
+* { font-family: var(--font-base); }
+
+// ============================================================
+// Auth Layout
+// ============================================================
+.auth-layout {
+  background: linear-gradient(135deg, #667eea22 0%, #764ba222 100%);
+  background-color: #f0f2f5;
+  min-height: 100vh;
+}
+
+.auth-container {
+  width: 100%;
+  max-width: 440px;
+  padding: 1.5rem;
+}
+
+// ============================================================
+// Root wrapper — full-height flex row
+// ============================================================
+html, body, #root {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+.app-wrapper {
+  display: flex;
+  height: 100vh;
+  overflow: hidden; // wrapper clips everything — no stray scrollbars
+}
+
+// ============================================================
+// SIDEBAR
+// ============================================================
+.app-sidebar {
+  // Size & flex
+  width: var(--sidebar-width);
+  flex-shrink: 0;
+
+  // Stack children top-to-bottom
+  display: flex;
+  flex-direction: column;
+
+  // Sidebar itself scrolls, not the page
+  height: 100vh;
+  overflow-y: auto;
+  overflow-x: hidden;
+
+  // Sit on top when needed but don't overlap navbar
+  position: relative;
+  z-index: 100;
+
+  // Smooth collapse
+  transition: width var(--transition-speed) ease;
+
+  // Thin scrollbar
+  scrollbar-width: thin;
+  scrollbar-color: rgba(255,255,255,0.1) transparent;
+  &::-webkit-scrollbar { width: 4px; }
+  &::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+
+  // Brand bar
+  .sidebar-brand {
+    height: var(--header-height);
+    min-height: var(--header-height);
+    flex-shrink: 0;
+    display: flex;
+    align-items: center;
+    overflow: hidden;           // hides text when collapsing
+    white-space: nowrap;
+    border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+
+  // Scrollable nav area
+  .sidebar-wrapper {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    white-space: nowrap;        // prevents text wrapping during transition
+  }
+
+  // Nav links
+  .nav-link {
+    color: rgba(255,255,255,0.65);
+    border-radius: 8px;
+    margin: 1px 10px;
+    padding: 0.45rem 0.75rem;
+    font-size: 0.875rem;
+    white-space: nowrap;
+    overflow: hidden;
+    transition: background 0.15s ease, color 0.15s ease;
+
+    &:hover {
+      color: #fff;
+      background: rgba(255,255,255,0.07);
+    }
+
+    &.active {
+      color: #fff !important;
+      background: var(--bs-primary) !important;
+      box-shadow: 0 2px 8px rgba(13,110,253,0.35);
+    }
+
+    &.active-parent {
+      color: #fff;
+      background: rgba(255,255,255,0.08);
+    }
+  }
+
+  .nav-treeview .nav-link {
+    padding-left: 1.5rem;
+    font-size: 0.83rem;
+    color: rgba(255,255,255,0.5);
+
+    &.active {
+      color: #fff !important;
+      background: rgba(13,110,253,0.5) !important;
+      box-shadow: none;
+    }
+  }
+
+  // Sidebar footer strip
+  .sidebar-footer {
+    flex-shrink: 0;
+    overflow: hidden;
+    white-space: nowrap;
+  }
+}
+
+// ============================================================
+// COLLAPSED STATE — shrink sidebar to zero, hide all content
+// ============================================================
+.sidebar-collapse .app-sidebar {
+  width: 0 !important;
+  // padding/border also zero so no ghost space appears
+  padding: 0 !important;
+  border: none !important;
+
+  // Hide overflowing content instantly (no flicker)
+  overflow: hidden !important;
+
+  // Inner elements: keep transition so they fade out with the sidebar
+  * {
+    opacity: 0;
+    transition: opacity var(--transition-speed) ease;
+  }
+}
+
+// Restore opacity when sidebar is open
+.app-sidebar * {
+  opacity: 1;
+  transition: opacity var(--transition-speed) ease;
+}
+
+// ============================================================
+// RIGHT COLUMN — fills remaining space
+// ============================================================
+.app-body {
+  flex: 1;
+  min-width: 0;           // crucial: flex child must not overflow
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  overflow: hidden;
+  transition: none;       // body itself needs no transition — it naturally expands
+}
+
+// ============================================================
+// NAVBAR — sticks to top of .app-body, full width of it
+// ============================================================
+.app-header {
+  flex-shrink: 0;
+  height: var(--header-height);
+  z-index: 200;
+  background: rgba(var(--bs-body-bg-rgb), 0.96) !important;
+  border-bottom: 1px solid var(--bs-border-color) !important;
+  backdrop-filter: blur(8px);
+
+  .nav-link {
+    color: var(--bs-body-color);
+    border-radius: 8px;
+    padding: 0.4rem 0.6rem;
+    transition: background 0.15s;
+
+    &:hover {
+      background: var(--bs-secondary-bg);
+      color: var(--bs-primary);
+    }
+  }
+}
+
+// ============================================================
+// MAIN CONTENT — scrollable, fills available height
+// ============================================================
+.app-main {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+
+// ============================================================
+// FOOTER
+// ============================================================
+.app-footer {
+  flex-shrink: 0;
+  border-top: 1px solid var(--bs-border-color);
+  background: var(--bs-body-bg);
+  padding: 0.75rem 1.5rem;
+  font-size: 0.82rem;
+  color: var(--bs-secondary-color);
+}
+
+// ============================================================
+// Cards
+// ============================================================
+.card {
+  border-radius: 12px;
+  transition: box-shadow 0.2s;
+
+  .card-header {
+    border-radius: 12px 12px 0 0 !important;
+  }
+}
+
+// ============================================================
+// Tables
+// ============================================================
+.table {
+  th {
+    font-size: 0.72rem;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 700;
+    color: var(--bs-secondary-color);
+    padding: 0.65rem 0.75rem;
+  }
+  td {
+    padding: 0.65rem 0.75rem;
+    font-size: 0.875rem;
+  }
+}
+
+// ============================================================
+// Progress
+// ============================================================
+.progress {
+  border-radius: 100px;
+  background: var(--bs-secondary-bg);
+}
+
+// ============================================================
+// Form Controls
+// ============================================================
+.form-control, .form-select {
+  border-radius: 8px;
+  font-size: 0.875rem;
+  &:focus {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.1);
+  }
+}
+
+// ============================================================
+// Badges
+// ============================================================
+.badge {
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+// ============================================================
+// Pagination
+// ============================================================
+.pagination .page-link {
+  border-radius: 8px !important;
+  margin: 0 2px;
+  font-size: 0.8rem;
+}
+
+// ============================================================
+// RESPONSIVE — mobile overlay behaviour
+// ============================================================
+@media (max-width: 768px) {
+  .app-wrapper {
+    position: relative;
+  }
+
+  // On mobile sidebar overlays content (fixed), default hidden
+  .app-sidebar {
+    position: fixed !important;
+    left: 0;
+    top: 0;
+    height: 100vh !important;
+    z-index: 1055 !important;
+    transform: translateX(-100%);
+    width: var(--sidebar-width) !important;
+    transition: transform var(--transition-speed) ease !important;
+
+    * { opacity: 1 !important; }
+  }
+
+  // Open on mobile = slide in
+  .app-wrapper:not(.sidebar-collapse) .app-sidebar {
+    transform: translateX(0);
+  }
+
+  // Collapsed on mobile = slide out (already done by default translateX(-100%))
+  .sidebar-collapse .app-sidebar {
+    transform: translateX(-100%) !important;
+    width: var(--sidebar-width) !important;
+    overflow: visible !important;
+    * { opacity: 1 !important; }
+  }
+}
